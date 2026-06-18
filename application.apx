@@ -1,0 +1,67 @@
+app APEX-AI-AGENTS (
+    name: APEX AI Agents
+    genAI {
+        service: @openai-default
+        aiConsentMessage:
+            ```
+            You will be talking with an external AI.
+            Please be mindful of the data you are sharing.
+            ```
+    }
+    logo {
+        type: text
+        text: APEX AI Agents
+    }
+    navigation {
+        homeUrl: {
+            page: 1
+        }
+        loginUrl: {
+            page: LOGIN
+        }
+    }
+    navigationMenu {
+        listTemplate: @/side-navigation-menu
+        templateOptions: [
+            #DEFAULT#
+            t-TreeNav--styleA
+            js-navCollapsed--hidden
+        ]
+        list: @navigation-menu
+    }
+    navigationBar {
+        list: @navigation-bar
+        listTemplate: @/navigation-bar
+        templateOptions: #DEFAULT#
+    }
+    userInterface {
+        currentTheme: @universal-theme
+        globalPage: 0
+        addBuiltWithApexToFooter: false
+    }
+    appFormatMasks {
+        date: DS
+        timestamp: DS
+        timestampTimeZone: DS
+    }
+    authentication {
+        scheme: @oracle-apex-accounts
+    }
+    sessionStateProtection {
+        checksumSalt: 7F2AB2240630DD1C34687D8E732D64207EFF8FDF06199353B61E5F3359A7183A
+    }
+    reportPrinting {
+        type: useInstanceSettings
+    }
+    runtime {
+        allowFeedback: true
+    }
+
+    substitution APP_NAME (
+        value {
+            staticValue: APEX AI Agents
+        }
+    )
+
+)
+

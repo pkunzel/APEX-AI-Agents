@@ -1,0 +1,57 @@
+breadcrumb breadcrumb (
+    name: Breadcrumb
+
+    entry chatbots (
+        name: Chatbots
+        pageNumber: 8
+        execution {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 8
+            }
+        }
+    )
+
+    entry home (
+        name: Home
+        pageNumber: 1
+        execution {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+    )
+
+    entry low-code-agent-features (
+        name: Low-Code AI Assistant
+        pageNumber: 2
+        execution {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 2
+            }
+        }
+    )
+
+    entry low-code-agents-tools (
+        name: Low Code Agents Tools
+        pageNumber: 3
+        execution {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 3
+            }
+        }
+    )
+
+)
+

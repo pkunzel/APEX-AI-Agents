@@ -1,0 +1,300 @@
+page 2 (
+    name: Low-Code AI Assistant
+    alias: LOW-CODE-AI-ASSISTANT
+    title: Low-Code AI Assistant
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+        warnOnUnsavedChanges: false
+    }
+    security {
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region chatbot (
+        name: Chatbot
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+            ]
+        }
+        advanced {
+            htmlDomId: region-chatbot
+        }
+    )
+
+    region parameters (
+        name: Parameters
+        type: staticContent
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+            ]
+        }
+    )
+
+    pageItem P2_DOMAIN (
+        type: selectList
+        label {
+            label: Domain
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Geography;GEOGRAPHY,Math;MATH,Invalid Topic;INVALID
+            displayNullValue: false
+        }
+        layout {
+            sequence: 30
+            region: @parameters
+            slot: regionBody
+            alignment: left
+            startNewRow: false
+            columnSpan: 3
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            height: 1
+        }
+    )
+
+    pageItem P2_LANGUAGE (
+        type: selectList
+        label {
+            label: Language
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:English;English,Spanish;Spanish,Portuguese;Portuguese
+            displayNullValue: false
+        }
+        layout {
+            sequence: 20
+            region: @parameters
+            slot: regionBody
+            alignment: left
+            startNewRow: false
+            columnSpan: 3
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            height: 1
+        }
+    )
+
+    pageItem P2_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @parameters
+            slot: regionBody
+            alignment: left
+            columnSpan: 3
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 30
+        }
+        source {
+            type: staticValue
+            staticValue: Paulo Kunzel
+        }
+    )
+
+    button clear-page (
+        buttonName: CLEAR_PAGE
+        label: Clear Page
+        layout {
+            sequence: 10
+            region: @breadcrumb
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+        }
+    )
+
+    button new (
+        buttonName: RESET_AI_CONSENT
+        label: Remove AI Consent
+        layout {
+            sequence: 20
+            region: @breadcrumb
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            icon: fa-head-ai-sparkle
+        }
+        behavior {
+            executeValidations: false
+            showProcessing: true
+            warnOnUnsavedChanges: doNotCheck
+        }
+    )
+
+    button new_1 (
+        buttonName: OPEN_CHATBOT
+        label: Open Chatbot
+        layout {
+            sequence: 40
+            region: @parameters
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 1
+        }
+        appearance {
+            buttonTemplate: @/icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--large
+                t-Button--stretch
+                t-Button--gapTop
+            ]
+            icon: fa-chatbot
+        }
+        behavior {
+            action: triggerAction
+        }
+
+        triggerAction native-open-ai-assistant (
+            action: showAiAssistant
+            genAI {
+                agent: @open-ai-agent
+                itemsToSubmit: [
+                    P2_NAME
+                    P2_LANGUAGE
+                    P2_DOMAIN
+                ]
+            }
+            appearance {
+                displayAs: inline
+                containerSelector: #region-chatbot
+            }
+            execution {
+                sequence: 20
+            }
+            advanced {
+                initJavaScriptFunction:
+                    ```javascript-browser
+                     function( options ) {
+                        window.chatModel?.destroy()
+                        window.chatView?.destroy()
+                        
+                        options.useChatContext = ( chatModel, chatView ) => {
+                            window.chatModel = chatModel;
+                            window.chatView = chatView;
+                        };
+                    
+                        return options;
+                    }
+                    ```
+            }
+        )
+
+    )
+
+    process clear-session-state (
+        name: Clear Session State
+        type: clearSessionState
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 6459368722321844914
+        }
+        serverSideCondition {
+            whenButtonPressed: @clear-page
+        }
+    )
+
+    process new (
+        name: Revoke AI Consent
+        type: invokeApi
+        invoke {
+            package: APEX_AI
+            procedureOrFunction: REVOKE_USER_CONSENT_FOR_ALL
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 6459367643464844903
+        }
+        serverSideCondition {
+            whenButtonPressed: @new
+        }
+
+        parameter p_application_id (
+            parameter {
+                dataType: number
+            }
+            value {
+                type: expression
+                plsqlExpression: :APP_ID
+            }
+            advanced {
+                displaySequence: 10
+            }
+        )
+
+    )
+
+)
+

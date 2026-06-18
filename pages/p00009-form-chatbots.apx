@@ -1,0 +1,375 @@
+page 9 (
+    name: Form Chatbots
+    alias: FORM-CHATBOTS
+    title: Form Chatbots
+    appearance {
+        pageMode: modalDialog
+        dialogTemplate: @/drawer
+        templateOptions: [
+            #DEFAULT#
+            js-dialog-class-t-Drawer--pullOutEnd
+        ]
+    }
+    dialog {
+        chained: false
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region buttons (
+        name: Buttons
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: dialogFooter
+        }
+        appearance {
+            template: @/buttons-container
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region form-chatbots (
+        name: Form Chatbots
+        type: form
+        source {
+            location: localDatabase
+            tableName: CB_CHATBOTS
+        }
+        layout {
+            sequence: 10
+            slot: contentBody
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        edit {
+            enabled: true
+            allowedOperations: [
+                add
+                update
+                delete
+            ]
+        }
+    )
+
+    pageItem P9_CREATED (
+        type: hidden
+        layout {
+            sequence: 70
+            region: @form-chatbots
+            slot: regionBody
+        }
+        source {
+            formRegion: @form-chatbots
+            column: CREATED
+            dataType: date
+        }
+    )
+
+    pageItem P9_CURRENT_SUMMARY (
+        type: textarea
+        label {
+            label: Current Summary
+            alignment: right
+        }
+        layout {
+            sequence: 60
+            region: @form-chatbots
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 60
+            height: 4
+        }
+        source {
+            formRegion: @form-chatbots
+            column: CURRENT_SUMMARY
+            dataType: clob
+        }
+        sessionState {
+            dataType: clob
+        }
+    )
+
+    pageItem P9_ID (
+        type: hidden
+        layout {
+            sequence: 10
+            region: @form-chatbots
+            slot: regionBody
+        }
+        source {
+            formRegion: @form-chatbots
+            column: ID
+            dataType: number
+            queryOnly: true
+            primaryKey: true
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P9_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: right
+        }
+        layout {
+            sequence: 20
+            region: @form-chatbots
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        validation {
+            valueRequired: true
+            maxLength: 150
+        }
+        source {
+            formRegion: @form-chatbots
+            column: NAME
+            dataType: varchar2
+        }
+    )
+
+    pageItem P9_PROMPT (
+        type: textarea
+        label {
+            label: Prompt
+            alignment: right
+        }
+        layout {
+            sequence: 30
+            region: @form-chatbots
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 60
+            height: 4
+        }
+        source {
+            formRegion: @form-chatbots
+            column: PROMPT
+            dataType: clob
+        }
+        sessionState {
+            dataType: clob
+        }
+    )
+
+    pageItem P9_SUMMARY_PROMPT (
+        type: textarea
+        label {
+            label: Summary Prompt
+            alignment: right
+        }
+        layout {
+            sequence: 50
+            region: @form-chatbots
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 60
+            height: 4
+        }
+        source {
+            formRegion: @form-chatbots
+            column: SUMMARY_PROMPT
+            dataType: clob
+        }
+        sessionState {
+            dataType: clob
+        }
+    )
+
+    pageItem P9_WELCOME_MESSAGE (
+        type: textarea
+        label {
+            label: Welcome Message
+            alignment: right
+        }
+        layout {
+            sequence: 40
+            region: @form-chatbots
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 60
+            height: 4
+        }
+        source {
+            formRegion: @form-chatbots
+            column: WELCOME_MESSAGE
+            dataType: clob
+        }
+        sessionState {
+            dataType: clob
+        }
+    )
+
+    button cancel (
+        buttonName: CANCEL
+        label: Cancel
+        layout {
+            sequence: 10
+            region: @buttons
+            slot: close
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: triggerAction
+        }
+
+        triggerAction native-dialog-cancel (
+            action: cancelDialog
+            execution {
+                sequence: 10
+            }
+        )
+
+    )
+
+    button create (
+        buttonName: CREATE
+        label: Create
+        layout {
+            sequence: 40
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: insert
+        }
+        serverSideCondition {
+            type: itemIsNull
+            item: P9_ID
+        }
+    )
+
+    button delete (
+        buttonName: DELETE
+        label: Delete
+        layout {
+            sequence: 20
+            region: @buttons
+            slot: delete
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            executeValidations: false
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: delete
+            requiresConfirmation: true
+        }
+        confirmation {
+            message: &APP_TEXT$DELETE_MSG!RAW.
+            style: danger
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P9_ID
+        }
+    )
+
+    button save (
+        buttonName: SAVE
+        label: Apply Changes
+        layout {
+            sequence: 30
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: update
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P9_ID
+        }
+    )
+
+    process close-dialog (
+        name: Close Dialog
+        type: closeDialog
+        execution {
+            sequence: 50
+        }
+        advanced {
+            executionMappingIdentifier: 6096764204836864935
+        }
+        serverSideCondition {
+            type: requestIsContainedInValue
+            value: CREATE,SAVE,DELETE
+        }
+    )
+
+    process initialize-form-form-chatbots (
+        name: Initialize form Form Chatbots
+        type: formInitialization
+        formRegion: @form-chatbots
+        execution {
+            sequence: 10
+            point: beforeHeader
+        }
+        advanced {
+            executionMappingIdentifier: 6096763456062864934
+        }
+    )
+
+    process process-form-form-chatbots (
+        name: Process form Form Chatbots
+        type: formAutoRowProcessing
+        formRegion: @form-chatbots
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 6096763867462864935
+        }
+    )
+
+)
+

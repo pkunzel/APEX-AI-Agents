@@ -1,0 +1,17 @@
+genAIService openai-default (
+    name: OpenAI
+    provider: openai
+    endpointUrl {
+        url: https://api.openai.com/v1
+    }
+    authentication {
+        credentials: @credentials_for_open_ai
+    }
+    appBuilder {
+        usedByAppBuilder: true
+    }
+    advanced {
+        modelName: gpt-5.5
+    }
+)
+
