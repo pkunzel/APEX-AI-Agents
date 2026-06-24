@@ -59,5 +59,63 @@ aiAgent sample-ai-agents (
             ```
         welcomeMessage: Hello, how are you?
     }
+
+    tool end-promotion (
+        name: end_promotion
+        type: executeServersideCode
+        executionPoint: onDemand
+        description: Ends the current active promotion by setting it's date to yesterday
+        settings {
+            language: plsql
+            plsqlCode:
+                ```plsql
+                update AGENT_PROMOTIONS
+                set DATE_END = trunc(sysdate) - 1
+                where DATE_END is null;
+                ```
+        }
+        userApproval {
+            requiresConfirmation: true
+            title: Are you sure you wish to end this promotion?
+            message: This action will end the current promotion.
+            confirmLabel: Ok
+            cancelLabel: Cancel
+        }
+        notification {
+            message: Promotion updated
+            type: info
+        }
+        security {
+            authorizationScheme: mustNotBePublicUser
+        }
+    )
+
+    tool retrieve-sales (
+        name: retrieve_sales
+        type: retrieveData
+        executionPoint: onDemand
+        description: Gets the data from sales from a specific customer
+        settings {
+            dataDescription: The data includes details about all sales made to a specific customer
+            sqlQuery:
+                ```sql
+                select *
+                from AGENT_SALES_VIEW
+                where customer_id = :CUSTOMER_ID
+                ```
+        }
+        security {
+            authorizationScheme: mustNotBePublicUser
+        }
+
+        parameter CUSTOMER_ID (
+            description: The customer code or Id
+            value {
+                dataType: number
+            }
+        )
+
+    )
+
 )
 

@@ -1,0 +1,50 @@
+installScript Tables (
+    execution {
+        sequence: 10
+    }
+    script {
+        contentFile: tables.sql
+    }
+
+    databaseObject (
+        owner: DEVPK
+        type: table
+        name: AGENT_CUSTOMERS
+    )
+
+    databaseObject (
+        owner: DEVPK
+        type: table
+        name: AGENT_PRODUCTS
+    )
+
+    databaseObject (
+        owner: DEVPK
+        type: table
+        name: AGENT_PROMOTIONS
+    )
+
+    databaseObject (
+        owner: DEVPK
+        type: table
+        name: AGENT_SALES
+    )
+
+)
+
+installScript Views (
+    execution {
+        sequence: 20
+    }
+    script {
+        contentFile: views.sql
+    }
+
+    databaseObject (
+        owner: DEVPK
+        type: view
+        name: AGENT_SALES_VIEW
+    )
+
+)
+

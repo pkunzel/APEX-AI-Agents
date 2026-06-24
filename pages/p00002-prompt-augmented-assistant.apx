@@ -1,0 +1,534 @@
+page 2 (
+    name: Low Code AI Assistant
+    alias: PROMPT-AUGMENTED-ASSISTANT
+    title: Low Code AI Assistant
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+        warnOnUnsavedChanges: false
+    }
+    security {
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region chatbot (
+        name: Chatbot
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+            ]
+        }
+        advanced {
+            htmlDomId: region-chatbot
+        }
+    )
+
+    region comparison (
+        name: Comparison
+        type: interactiveReport
+        source {
+            location: localDatabase
+            tableName: AGENT_SALES_VIEW
+            whereClause: customer_id = :P2_CUSTOMER_ID
+            pageItemsToSubmit: P2_CUSTOMER_ID
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @/collapsible
+            templateOptions: [
+                #DEFAULT#
+                is-collapsed
+                t-Region--scrollBody
+            ]
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        advanced {
+            savedReportMappingIdentifier: 9672591618061073219
+        }
+
+        column CUSTOMER_ID (
+            type: hidden
+            heading {
+                heading: Customer Id
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column CUSTOMER_NAME (
+            type: plainText
+            heading {
+                heading: Customer Name
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column DISCOUNTED_TOTAL (
+            type: plainText
+            heading {
+                heading: Discounted Total
+                alignment: end
+            }
+            layout {
+                sequence: 110
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: K
+            }
+        )
+
+        column DISCOUNT_PRICE (
+            type: plainText
+            heading {
+                heading: Discount Price
+                alignment: end
+            }
+            layout {
+                sequence: 90
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: I
+            }
+        )
+
+        column PRICE (
+            type: plainText
+            heading {
+                heading: Price
+                alignment: end
+            }
+            layout {
+                sequence: 70
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: G
+            }
+        )
+
+        column PRODUCT_NAME (
+            type: plainText
+            heading {
+                heading: Product Name
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column PROMOTION_NAME (
+            type: plainText
+            heading {
+                heading: Promotion Name
+            }
+            layout {
+                sequence: 80
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: H
+            }
+        )
+
+        column QUANTITY (
+            type: plainText
+            heading {
+                heading: Quantity
+                alignment: end
+            }
+            layout {
+                sequence: 60
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: F
+            }
+        )
+
+        column SALE_ID (
+            type: hidden
+            heading {
+                heading: Sale Id
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column SKU (
+            type: plainText
+            heading {
+                heading: Sku
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        column TOTAL_AMOUNT (
+            type: plainText
+            heading {
+                heading: Total Amount
+                alignment: end
+            }
+            layout {
+                sequence: 100
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: J
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+        savedReport primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn CUSTOMER_ID (
+                sequence: 2
+            )
+
+            displayColumn CUSTOMER_NAME (
+                sequence: 3
+            )
+
+            displayColumn DISCOUNTED_TOTAL (
+                sequence: 11
+            )
+
+            displayColumn DISCOUNT_PRICE (
+                sequence: 9
+            )
+
+            displayColumn PRICE (
+                sequence: 7
+            )
+
+            displayColumn PRODUCT_NAME (
+                sequence: 4
+            )
+
+            displayColumn PROMOTION_NAME (
+                sequence: 8
+            )
+
+            displayColumn QUANTITY (
+                sequence: 6
+            )
+
+            displayColumn SALE_ID (
+                sequence: 1
+            )
+
+            displayColumn SKU (
+                sequence: 5
+            )
+
+            displayColumn TOTAL_AMOUNT (
+                sequence: 10
+            )
+
+        )
+
+    )
+
+    region parameters (
+        name: Parameters
+        type: staticContent
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+            ]
+        }
+    )
+
+    pageItem P2_CUSTOMER_ID (
+        type: popupLov
+        label {
+            label: Customer
+            alignment: left
+        }
+        lov {
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select ac.first_name || ' ' || ac.last_name as full_name
+                     , ac.id
+                  from agent_customers ac
+                ```
+        }
+        layout {
+            sequence: 10
+            region: @parameters
+            slot: regionBody
+            alignment: left
+            columnSpan: 3
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 30
+        }
+    )
+
+    button clear-page (
+        buttonName: CLEAR_PAGE
+        label: Clear Page
+        layout {
+            sequence: 10
+            region: @breadcrumb
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+        }
+    )
+
+    button new (
+        buttonName: RESET_AI_CONSENT
+        label: Remove AI Consent
+        layout {
+            sequence: 20
+            region: @breadcrumb
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            icon: fa-head-ai-sparkle
+        }
+        behavior {
+            executeValidations: false
+            showProcessing: true
+            warnOnUnsavedChanges: doNotCheck
+        }
+    )
+
+    button new_1 (
+        buttonName: OPEN_CHATBOT
+        label: Open Chatbot
+        layout {
+            sequence: 40
+            region: @parameters
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 1
+        }
+        appearance {
+            buttonTemplate: @/icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--large
+                t-Button--stretch
+                t-Button--gapTop
+            ]
+            icon: fa-chatbot
+        }
+        behavior {
+            action: triggerAction
+        }
+
+        triggerAction native-open-ai-assistant (
+            action: showAiAssistant
+            genAI {
+                agent: @open-ai-agent
+                itemsToSubmit: P2_CUSTOMER_ID
+            }
+            appearance {
+                displayAs: inline
+                containerSelector: #region-chatbot
+            }
+            execution {
+                sequence: 20
+            }
+            advanced {
+                initJavaScriptFunction:
+                    ```javascript-browser
+                     function( options ) {
+                        window.chatModel?.destroy()
+                        window.chatView?.destroy()
+                        
+                        options.useChatContext = ( chatModel, chatView ) => {
+                            window.chatModel = chatModel;
+                            window.chatView = chatView;
+                        };
+                    
+                        return options;
+                    }
+                    ```
+            }
+        )
+
+        triggerAction update-comparison-table (
+            name: Update comparison table
+            action: refresh
+            affectedElements {
+                selectionType: region
+                region: @comparison
+            }
+            execution {
+                sequence: 30
+            }
+        )
+
+    )
+
+    process clear-session-state (
+        name: Clear Session State
+        type: clearSessionState
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 6459368722321844914
+        }
+        serverSideCondition {
+            whenButtonPressed: @clear-page
+        }
+    )
+
+    process new (
+        name: Revoke AI Consent
+        type: invokeApi
+        invoke {
+            package: APEX_AI
+            procedureOrFunction: REVOKE_USER_CONSENT_FOR_ALL
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 6459367643464844903
+        }
+        serverSideCondition {
+            whenButtonPressed: @new
+        }
+
+        parameter p_application_id (
+            parameter {
+                dataType: number
+            }
+            value {
+                type: expression
+                plsqlExpression: :APP_ID
+            }
+            advanced {
+                displaySequence: 10
+            }
+        )
+
+    )
+
+)
+

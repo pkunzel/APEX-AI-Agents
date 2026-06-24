@@ -1,7 +1,7 @@
 page 3 (
-    name: Low Code Agents Tools
+    name: Low Code AI Agent
     alias: LOW-CODE-AGENTS-TOOLS
-    title: Low Code Agents Tools
+    title: Low Code AI Agent
     appearance {
         pageTemplate: @/standard
         templateOptions: #DEFAULT#
@@ -35,6 +35,88 @@ page 3 (
             breadcrumbTemplate: @/breadcrumb
             templateOptions: #DEFAULT#
         }
+    )
+
+    region new (
+        name: APEX AI Agent
+        type: staticContent
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--showIcon
+                t-Region--scrollBody
+            ]
+            icon: fa-ai
+        }
+        advanced {
+            htmlDomId: region-chatbot
+        }
+    )
+
+    button new (
+        buttonName: REFRESH_AGENT
+        label: Refresh Agent
+        layout {
+            sequence: 10
+            region: @new
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/icon
+            templateOptions: #DEFAULT#
+            icon: fa-refresh
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )
+
+    dynamicAction new (
+        name: Refresh Agent
+        execution {
+            sequence: 10
+        }
+        when {
+            event: click
+            selectionType: button
+            button: @new
+        }
+
+        action native-open-ai-assistant (
+            action: showAiAssistant
+            genAI {
+                agent: @sample-ai-agents
+            }
+            appearance {
+                displayAs: inline
+                containerSelector: #region-chatbot
+            }
+            execution {
+                sequence: 10
+            }
+            advanced {
+                initJavaScriptFunction:
+                    ```javascript-browser
+                     function( options ) {
+                        window.chatModel?.destroy()
+                        window.chatView?.destroy()
+                        
+                        options.useChatContext = ( chatModel, chatView ) => {
+                            window.chatModel = chatModel;
+                            window.chatView = chatView;
+                        };
+                    
+                        return options;
+                    }
+                    ```
+            }
+        )
+
     )
 
 )

@@ -100,7 +100,7 @@ list navigation-menu (
     )
 
     entry low-code-agent-features (
-        label: Low-Code AI Assistant
+        label: Low Code AI Assistant
         icon {
             imageIconCssClasses: fa-chatbot
         }
@@ -119,7 +119,7 @@ list navigation-menu (
     )
 
     entry low-code-agents-tools (
-        label: Low Code Agents Tools
+        label: Low Code AI Agent
         icon {
             imageIconCssClasses: fa-ai
         }
@@ -133,6 +133,25 @@ list navigation-menu (
         link {
             target: {
                 page: 3
+            }
+        }
+    )
+
+    entry teste (
+        label: teste
+        icon {
+            imageIconCssClasses: fa-file-o
+        }
+        layout {
+            sequence: 90
+        }
+        isCurrent {
+            type: pages
+            pages: 4
+        }
+        link {
+            target: {
+                page: 4
             }
         }
     )
