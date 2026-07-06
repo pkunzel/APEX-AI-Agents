@@ -1,0 +1,128 @@
+page 5 (
+    name: Generate Text with AI Process
+    alias: GENERATE-TEXT-WITH-AI-PROCESS
+    title: Generate Text with AI Process
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    pageItem P5_INPUT (
+        type: textField
+        label {
+            label: Input
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            slot: body
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 30
+        }
+    )
+
+    pageItem P5_OUTPUT (
+        type: richTextEditor
+        label {
+            label: Output
+            alignment: left
+        }
+        settings {
+            minHeight: 180
+        }
+        layout {
+            sequence: 20
+            slot: body
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    button validate (
+        buttonName: Validate
+        label: Validate
+        layout {
+            sequence: 10
+            region: @breadcrumb
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+            icon: fa-workflow
+        }
+        behavior {
+            action: triggerAction
+        }
+
+        triggerAction native-open-ai-assistant (
+            action: showAiAssistant
+            genAI {
+                agent: @response-formats
+            }
+            execution {
+                sequence: 10
+            }
+        )
+
+    )
+
+    process new (
+        name: Generate Text With AI
+        type: generateTextWithAi
+        genAI {
+            agent: @response-formats
+        }
+        inputValue {
+            item: P5_INPUT
+        }
+        useResponse {
+            item: P5_OUTPUT
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 8138581566216109
+        }
+    )
+
+)
+

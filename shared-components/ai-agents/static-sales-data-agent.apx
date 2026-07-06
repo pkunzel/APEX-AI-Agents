@@ -1,0 +1,151 @@
+aiAgent static-sales-data-agent (
+    name: Static Sales Data Agent
+    genAI {
+        systemPrompt: "You are a helpful assistant. "
+        welcomeMessage: Hello, how can I help?
+    }
+
+    tool static-sales-2 (
+        name: static_sales_data_2
+        type: retrieveData
+        executionPoint: onDemand
+        description: File 2, Retrieves Static Sales data. Used when the user wants information on sales
+        settings {
+            dataDescription: A CSV containing sales data
+            type: static
+            text:
+                ```
+                # File 2
+                
+                CUSTOMER_ID,CUSTOMER_NAME,PRODUCT_NAME,SKU,QUANTITY,PRICE,PROMOTION_NAME,DISCOUNT_PRICE,TOTAL_AMOUNT,DISCOUNTED_TOTAL
+                7,Sophia Garcia,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                47,Claire Yamamoto,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                16,Benjamin Parker,Orange Juice,GROC-006,1,3.79,Weekend Pantry Saver,3.41,3.79,3.41
+                6,Ethan Foster,Orange Juice,GROC-006,2.5,3.79,Weekend Pantry Saver,3.41,9.48,8.53
+                46,John Walker,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                36,Joseph Kim,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                26,Matthew Zimmerman,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                16,Benjamin Parker,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                6,Ethan Foster,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                46,John Walker,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                36,Joseph Kim,Orange Juice,GROC-006,2.5,3.79,,3.79,9.48,9.48
+                26,Matthew Zimmerman,Orange Juice,GROC-006,1,3.79,,3.79,3.79,3.79
+                35,Lily Jenkins,Greek Yogurt,GROC-007,4,6.49,Fresh Market Month,5.52,25.96,22.07
+                25,Grace Young,Greek Yogurt,GROC-007,4,6.49,Fresh Market Month,5.52,25.96,22.07
+                15,Harper Ortiz,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                5,Ava Evans,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                45,Audrey Vasquez,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                35,Lily Jenkins,Greek Yogurt,GROC-007,2.5,6.49,,6.49,16.23,16.23
+                25,Grace Young,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                15,Harper Ortiz,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                5,Ava Evans,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                45,Audrey Vasquez,Greek Yogurt,GROC-007,4,6.49,,6.49,25.96,25.96
+                14,James Nelson,Cheddar Cheese,GROC-008,2,4.59,Household Essentials Deal,3.67,9.18,7.34
+                4,Noah Davis,Cheddar Cheese,GROC-008,2,4.59,Household Essentials Deal,3.67,9.18,7.34
+                44,Wyatt Turner,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                34,David Ingram,Cheddar Cheese,GROC-008,2.5,4.59,,4.59,11.48,11.48
+                24,Daniel Xu,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                14,James Nelson,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                4,Noah Davis,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                44,Wyatt Turner,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                34,David Ingram,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                24,Daniel Xu,Cheddar Cheese,GROC-008,2,4.59,,4.59,9.18,9.18
+                33,Natalie Harris,Chicken Breast,GROC-009,2.5,9.99,Weekend Pantry Saver,8.99,24.98,22.48
+                23,Ella White,Chicken Breast,GROC-009,5,9.99,Weekend Pantry Saver,8.99,49.95,44.96
+                13,Amelia Miller,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                3,Emma Clark,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                43,Leah Silva,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                33,Natalie Harris,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                23,Ella White,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                13,Amelia Miller,Chicken Breast,GROC-009,2.5,9.99,,9.99,24.98,24.98
+                3,Emma Clark,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                43,Leah Silva,Chicken Breast,GROC-009,5,9.99,,9.99,49.95,49.95
+                2,Liam Brown,Ground Beef,GROC-010,3,6.79,Fresh Market Month,5.77,20.37,17.31
+                42,Owen Roberts,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                32,Samuel Gomez,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                22,Alexander Vargas,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                12,Logan Lopez,Ground Beef,GROC-010,2.5,6.79,,6.79,16.98,16.98
+                2,Liam Brown,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                42,Owen Roberts,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                32,Samuel Gomez,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                22,Alexander Vargas,Ground Beef,GROC-010,3,6.79,,6.79,20.37,20.37
+                ```
+        }
+        notification {
+            message: File 2 Acessed
+            type: info
+        }
+    )
+
+    tool static-sales-data (
+        name: static_sales_data_1
+        type: retrieveData
+        executionPoint: onDemand
+        description: File 1, retrieves sales data. used when the user want to know information on sales
+        settings {
+            dataDescription: A CSV containing Sales data
+            type: static
+            text:
+                ```
+                # File 1
+                
+                CUSTOMER_ID,CUSTOMER_NAME,PRODUCT_NAME,SKU,QUANTITY,PRICE,PROMOTION_NAME,DISCOUNT_PRICE,TOTAL_AMOUNT,DISCOUNTED_TOTAL
+                41,Nora Perez,Whole Milk,GROC-001,.5,4.29,Fresh Market Month,3.65,2.15,1.82
+                31,Sofia Flores,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                21,Emily Underwood,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                11,Isabella King,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                1,Olivia Anderson,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                41,Nora Perez,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                31,Sofia Flores,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                21,Emily Underwood,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                11,Isabella King,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                1,Olivia Anderson,Whole Milk,GROC-001,.5,4.29,,4.29,2.15,2.15
+                20,William Taylor,Free Range Eggs,GROC-002,4,5.49,Household Essentials Deal,4.39,21.96,17.57
+                10,Mason Johnson,Free Range Eggs,GROC-002,4,5.49,Household Essentials Deal,4.39,21.96,17.57
+                50,Luke Ramirez,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                40,Carter Owens,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                30,Jacob Edwards,Free Range Eggs,GROC-002,2.5,5.49,,5.49,13.73,13.73
+                20,William Taylor,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                10,Mason Johnson,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                50,Luke Ramirez,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                40,Carter Owens,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                30,Jacob Edwards,Free Range Eggs,GROC-002,4,5.49,,5.49,21.96,21.96
+                39,Zoe Nguyen,Sourdough Bread,GROC-003,2,4.99,Weekend Pantry Saver,4.49,9.98,8.98
+                29,Victoria Diaz,Sourdough Bread,GROC-003,2.5,4.99,,4.99,12.48,12.48
+                19,Abigail Sanchez,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                9,Mia Irwin,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                49,Stella Coleman,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                39,Zoe Nguyen,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                29,Victoria Diaz,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                19,Abigail Sanchez,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                9,Mia Irwin,Sourdough Bread,GROC-003,2.5,4.99,,4.99,12.48,12.48
+                49,Stella Coleman,Sourdough Bread,GROC-003,2,4.99,,4.99,9.98,9.98
+                18,Elijah Reed,Bananas,GROC-004,5,1.89,Fresh Market Month,1.61,9.45,8.03
+                8,Lucas Hill,Bananas,GROC-004,5,1.89,Fresh Market Month,1.61,9.45,8.03
+                48,Jack Brooks,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                38,Gabriel Martins,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                28,Michael Carter,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                18,Elijah Reed,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                8,Lucas Hill,Bananas,GROC-004,2.5,1.89,,1.89,4.73,4.73
+                48,Jack Brooks,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                38,Gabriel Martins,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                28,Michael Carter,Bananas,GROC-004,5,1.89,,1.89,9.45,9.45
+                37,Hannah Lewis,Gala Apples,GROC-005,3,5.99,Household Essentials Deal,4.79,17.97,14.38
+                27,Chloe Bennett,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                17,Evelyn Quinn,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                7,Sophia Garcia,Gala Apples,GROC-005,2.5,5.99,,5.99,14.98,14.98
+                47,Claire Yamamoto,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                37,Hannah Lewis,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                27,Chloe Bennett,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                17,Evelyn Quinn,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                7,Sophia Garcia,Gala Apples,GROC-005,3,5.99,,5.99,17.97,17.97
+                ```
+        }
+        notification {
+            message: File 1 Acessed
+            type: info
+        }
+    )
+
+)
+

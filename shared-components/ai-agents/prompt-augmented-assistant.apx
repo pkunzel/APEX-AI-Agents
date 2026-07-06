@@ -1,4 +1,4 @@
-aiAgent open-ai-agent (
+aiAgent prompt-augmented-assistant (
     name: Prompt Augmented Assistant
     genAI {
         systemPrompt:

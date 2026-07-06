@@ -5,7 +5,7 @@ genAIService openai-default (
         url: https://api.openai.com/v1
     }
     authentication {
-        credentials: @credentials_for_open_ai
+        credentials: @credentials-for-openai-2
     }
     appBuilder {
         usedByAppBuilder: true

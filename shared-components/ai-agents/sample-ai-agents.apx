@@ -90,6 +90,16 @@ aiAgent sample-ai-agents (
         }
     )
 
+    tool hello-world (
+        name: show_hello
+        type: executeClientsideCode
+        executionPoint: onDemand
+        description: Called when the user request the chatbot to say 'Hello World'
+        settings {
+            jsCode: apex.message.alert("Hello")
+        }
+    )
+
     tool retrieve-sales (
         name: retrieve_sales
         type: retrieveData
@@ -115,6 +125,16 @@ aiAgent sample-ai-agents (
             }
         )
 
+    )
+
+    tool show-world (
+        name: show_world
+        type: executeClientsideCode
+        executionPoint: onDemand
+        description: called right after the show_hello tool
+        settings {
+            jsCode: apex.message.showPageSuccess('World')
+        }
     )
 
 )

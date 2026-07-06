@@ -62,24 +62,21 @@ list navigation-bar (
 list navigation-menu (
     name: Navigation Menu
 
-    entry chatbots (
-        label: Chatbots
+    entry generate-text-with-ai-process (
+        label: Generate Text with AI Process
         icon {
-            imageIconCssClasses: fa-table
+            imageIconCssClasses: fa-ai-sparkle-message
         }
         layout {
-            sequence: 80
+            sequence: 40
         }
         isCurrent {
             type: pages
-            pages: [
-                8
-                9
-            ]
+            pages: 5
         }
         link {
             target: {
-                page: 8
+                page: 5
             }
         }
     )
@@ -133,25 +130,6 @@ list navigation-menu (
         link {
             target: {
                 page: 3
-            }
-        }
-    )
-
-    entry teste (
-        label: teste
-        icon {
-            imageIconCssClasses: fa-file-o
-        }
-        layout {
-            sequence: 90
-        }
-        isCurrent {
-            type: pages
-            pages: 4
-        }
-        link {
-            target: {
-                page: 4
             }
         }
     )

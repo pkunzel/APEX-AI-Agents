@@ -221,22 +221,6 @@ page 2 (
             }
         )
 
-        column SALE_ID (
-            type: hidden
-            heading {
-                heading: Sale Id
-            }
-            layout {
-                sequence: 10
-            }
-            source {
-                dataType: NUMBER
-            }
-            advanced {
-                endUserAlias: A
-            }
-        )
-
         column SKU (
             type: plainText
             heading {
@@ -283,47 +267,43 @@ page 2 (
             }
 
             displayColumn CUSTOMER_ID (
-                sequence: 2
-            )
-
-            displayColumn CUSTOMER_NAME (
-                sequence: 3
-            )
-
-            displayColumn DISCOUNTED_TOTAL (
-                sequence: 11
-            )
-
-            displayColumn DISCOUNT_PRICE (
-                sequence: 9
-            )
-
-            displayColumn PRICE (
-                sequence: 7
-            )
-
-            displayColumn PRODUCT_NAME (
-                sequence: 4
-            )
-
-            displayColumn PROMOTION_NAME (
-                sequence: 8
-            )
-
-            displayColumn QUANTITY (
-                sequence: 6
-            )
-
-            displayColumn SALE_ID (
                 sequence: 1
             )
 
-            displayColumn SKU (
+            displayColumn CUSTOMER_NAME (
+                sequence: 2
+            )
+
+            displayColumn DISCOUNTED_TOTAL (
+                sequence: 10
+            )
+
+            displayColumn DISCOUNT_PRICE (
+                sequence: 8
+            )
+
+            displayColumn PRICE (
+                sequence: 6
+            )
+
+            displayColumn PRODUCT_NAME (
+                sequence: 3
+            )
+
+            displayColumn PROMOTION_NAME (
+                sequence: 7
+            )
+
+            displayColumn QUANTITY (
                 sequence: 5
             )
 
+            displayColumn SKU (
+                sequence: 4
+            )
+
             displayColumn TOTAL_AMOUNT (
-                sequence: 10
+                sequence: 9
             )
 
         )
