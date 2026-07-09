@@ -95,7 +95,7 @@ page 5 (
         triggerAction native-open-ai-assistant (
             action: showAiAssistant
             genAI {
-                agent: @response-formats
+                agent: @static-sales-data-agent
             }
             execution {
                 sequence: 10
@@ -108,7 +108,7 @@ page 5 (
         name: Generate Text With AI
         type: generateTextWithAi
         genAI {
-            agent: @response-formats
+            agent: @static-sales-data-agent
         }
         inputValue {
             item: P5_INPUT

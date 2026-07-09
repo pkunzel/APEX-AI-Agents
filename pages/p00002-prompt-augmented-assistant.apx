@@ -422,7 +422,7 @@ page 2 (
         triggerAction native-open-ai-assistant (
             action: showAiAssistant
             genAI {
-                agent: @open-ai-agent
+                agent: @static-sales-data-agent
                 itemsToSubmit: P2_CUSTOMER_ID
             }
             appearance {
