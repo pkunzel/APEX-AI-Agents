@@ -7,25 +7,21 @@ installScript Tables (
     }
 
     databaseObject (
-        owner: DEVPK
         type: table
         name: AGENT_CUSTOMERS
     )
 
     databaseObject (
-        owner: DEVPK
         type: table
         name: AGENT_PRODUCTS
     )
 
     databaseObject (
-        owner: DEVPK
         type: table
         name: AGENT_PROMOTIONS
     )
 
     databaseObject (
-        owner: DEVPK
         type: table
         name: AGENT_SALES
     )
@@ -41,10 +37,8 @@ installScript Views (
     }
 
     databaseObject (
-        owner: DEVPK
         type: view
         name: AGENT_SALES_VIEW
     )
 
 )
-
